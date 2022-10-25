@@ -1,0 +1,62 @@
+%
+%----------------------------------
+%
+% MAIN FUNCTION
+%
+%----------------------------------
+%
+anagrams2:: [int] -> [int] -> bool
+anagrams2 L1 L2 = are_equal OL1 OL2 <==
+	bubble_sort L1 == OL1,
+	bubble_sort L2 == OL2	
+%
+%----------------------------------
+%
+% EXTRA FUNCTIONS
+%
+%----------------------------------
+%
+change:: int -> int -> (int, int)
+change X Y = (X,Y) <==
+	X <= Y
+change X Y = (Y,X) <==
+	X > Y
+%
+set_biggest:: [int] -> [int]
+set_biggest [X] = [X]
+set_biggest [X,Y|Xs] = [A|set_biggest [B|Xs]] <==
+	change X Y == (A,B)
+%	
+remove_last:: [A] -> [A]
+remove_last [X] = []
+remove_last [X,Y|Xs] = [X | remove_last [Y|Xs]] 	
+%
+tail:: [A] -> A
+tail [X] = X
+tail [X,Y|Xs] = tail [Y|Xs]
+%
+% 
+(++) :: [A] -> [A] -> [A]
+[] ++ Ys = Ys
+[X|Xs] ++ Ys = [X|Xs ++ Ys]
+%
+bubble_sort:: [int] -> [int]
+bubble_sort [] = []
+bubble_sort [X|Xs] = (bubble_sort (remove_last L)) ++ [(tail L)] <==
+	set_biggest [X|Xs] == L
+%
+are_equal:: [A] -> [A] -> bool
+are_equal [] [] = true
+are_equal [X|Xs] [Y|Ys] = false <==	
+	X /= Y
+are_equal [X|Xs] [X|Ys] = are_equal Xs Ys
+%
+%----------------------------------
+% GOALS
+%----------------------------------
+%
+%anagrams2 [1,2,3,4] [4,3,2,1] == Res
+%
+%anagrams2 [1,2,3,4] [5,3,2,1] == Res
+%
+
